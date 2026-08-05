@@ -1,0 +1,54 @@
+name: Candidatura ao Beta 10
+description: Candidate-se para testar a Retoma em um projeto real.
+title: "[Candidatura] "
+labels:
+  - candidate
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado pelo interesse. Não informe e-mail, telefone, senha, token ou qualquer dado privado.
+  - type: dropdown
+    id: experiencia
+    attributes:
+      label: Experiência atual
+      options:
+        - Começando agora
+        - Júnior
+        - Pleno
+        - Sênior
+        - Estudante ou entusiasta
+    validations:
+      required: true
+  - type: input
+    id: sistema
+    attributes:
+      label: Sistema operacional
+      placeholder: "Ex.: Pop!_OS, Ubuntu, macOS ou Windows com WSL"
+    validations:
+      required: true
+  - type: textarea
+    id: projeto
+    attributes:
+      label: Projeto em que pretende testar
+      description: Descreva sem publicar código ou informação confidencial.
+    validations:
+      required: true
+  - type: textarea
+    id: desorientacao
+    attributes:
+      label: Onde você normalmente perde o contexto?
+      description: Conte o que acontece quando você volta a um projeto depois de algumas horas ou dias.
+    validations:
+      required: true
+  - type: checkboxes
+    id: compromisso
+    attributes:
+      label: Compromissos do programa
+      options:
+        - label: Posso realizar duas sessões separadas por pelo menos 24 horas.
+          required: true
+        - label: Concordo em não compartilhar o código privado recebido.
+          required: true
+        - label: Concordo em registrar feedback objetivo pelo GitHub.
+          required: true
