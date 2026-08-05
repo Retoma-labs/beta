@@ -1,0 +1,44 @@
+name: Retoma Beta Operator
+
+on:
+  issues:
+    types: [opened, edited, reopened]
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Modo seguro de execução"
+        required: true
+        default: validate
+        type: choice
+        options:
+          - validate
+          - reconcile
+
+permissions:
+  contents: read
+
+concurrency:
+  group: retoma-beta-operator
+  cancel-in-progress: false
+
+jobs:
+  operate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Obter código do repositório
+        uses: actions/checkout@v6
+
+      - name: Operar turma Beta 10
+        env:
+          RETOMA_APP_ID: ${{ secrets.RETOMA_APP_ID }}
+          RETOMA_APP_PRIVATE_KEY: ${{ secrets.RETOMA_APP_PRIVATE_KEY }}
+          RETOMA_ORG: Retoma-labs
+          RETOMA_REPOSITORY: beta
+          RETOMA_TEAM_SLUG: beta-testers
+          RETOMA_CAPACITY: "10"
+          RETOMA_MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event_name == 'schedule' && 'reconcile' || 'operate') }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+        run: node .github/scripts/beta-operator.mjs
